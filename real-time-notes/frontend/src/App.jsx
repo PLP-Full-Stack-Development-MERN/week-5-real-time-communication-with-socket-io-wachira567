@@ -1,21 +1,29 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { SocketProvider } from './contexts/SocketContext';
-import { UserProvider } from './contexts/UserContext';
-import NoteEditor from './components/NoteEditor';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import NoteEditor from './NoteEditor';
+
+function Home() {
+  const navigate = useNavigate();
+  const createNote = async () => {
+    const res = await fetch('https://real-time-notes-backend-6qdj.onrender.com/api/notes', { method: 'POST' });
+    const data = await res.json();
+    navigate(`/notes/${data._id}`);
+  };
+
+  return (
+    <div>
+      Welcome! <button onClick={createNote}>Create a New Note</button>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <SocketProvider>
-      <UserProvider>
-        <Router>
-          <Routes>
-            <Route path="/notes/:id" element={<NoteEditor />} />
-            <Route path="/" element={<div>Welcome! Enter a note ID to start (e.g., /notes/123).</div>} />
-          </Routes>
-        </Router>
-      </UserProvider>
-    </SocketProvider>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/notes/:id" element={<NoteEditor />} />
+      </Routes>
+    </Router>
   );
 }
 
