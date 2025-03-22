@@ -4,7 +4,7 @@ import { SocketContext } from '../contexts/SocketContext';
 import { UserContext } from '../contexts/UserContext';
 
 const NoteEditor = () => {
-  const { id } = useParams(); // Room/note ID from URL
+  const { id } = useParams(); // Gets note ID from URL (e.g., 67defa9ebad91304ad2acd76)
   const socket = useContext(SocketContext);
   const { username } = useContext(UserContext);
   const [content, setContent] = useState('');
