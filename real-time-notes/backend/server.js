@@ -11,10 +11,11 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["https://real-time-notes.vercel.app"],
     methods: ["GET", "POST"]
   }
 });
+
 
 app.use(cors());
 app.use(express.json());
