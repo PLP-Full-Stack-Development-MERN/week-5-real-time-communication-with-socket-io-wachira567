@@ -11,7 +11,7 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: ["https://real-time-notes.vercel.app"],
+    origin: ["https://real-time-communication-with-socket-io.vercel.app/"],
     methods: ["GET", "POST"]
   }
 });
