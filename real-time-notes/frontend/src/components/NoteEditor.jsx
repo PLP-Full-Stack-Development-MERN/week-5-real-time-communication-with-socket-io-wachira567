@@ -13,8 +13,11 @@ const NoteEditor = () => {
   useEffect(() => {
     // Fetch initial note content
     fetch(`https://real-time-notes-backend-6qdj.onrender.com/api/notes/${id}`)
-      .then((res) => res.json())
-      .then((data) => setContent(data.content))
+      .then((res) => {
+        if (!res.ok) throw new Error(`Failed to fetch note: ${res.status}`);
+        return res.json();
+      })
+      .then((data) => setContent(data.content || '')) // Default to empty string if no content
       .catch((err) => console.error('Error fetching note:', err));
 
     // Connect socket and join room
@@ -50,6 +53,7 @@ const NoteEditor = () => {
         value={content}
         onChange={handleChange}
         style={{ width: '100%', height: '200px', marginBottom: '20px' }}
+        placeholder="Start typing..."
       />
       <h3>Online Users:</h3>
       <ul>
